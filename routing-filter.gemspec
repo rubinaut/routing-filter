@@ -15,9 +15,11 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.rubyforge_project = '[none]'
 
-  s.add_dependency 'actionpack'
-
-  s.add_development_dependency 'i18n'
-  s.add_development_dependency 'rails'
+  set the dep version of Rails stuff to ~> 2.3.5 so we dont pull down Rails 3
+  s.add_dependency 'actionpack', '~> 2.3.5'
+  
+  # i18n is vendored in activesupport ~> 2.3, leaving this in will pull in Rails 3 stuff
+  # s.add_development_dependency 'i18n' 
+  s.add_development_dependency 'rails', '~> 2.3.5'
   s.add_development_dependency 'test_declarative'
 end
