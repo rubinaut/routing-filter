@@ -30,8 +30,13 @@ module RoutingFilter
       end
     end
 
-    def around_generate(params, &block)
+    def around_generate(*args, &block)
+      params = args.extract_options!                              # this is because we might get a call to root_url
+
       uuid = params.delete(:uuid)
+      
+      args << params
+      
       yield.tap do |result|
         prepend_segment!(result, uuid) if uuid
       end

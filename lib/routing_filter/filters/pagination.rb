@@ -31,8 +31,13 @@ module RoutingFilter
       end
     end
 
-    def around_generate(params, &block)
+    def around_generate(*args, &block)
+      params = args.extract_options!                              # this is because we might get a call to root_url
+      
       page = params.delete(:page)
+
+      args << params
+      
       yield.tap do |result|
         append_segment!(result, "page/#{page}") if append_page?(page)
       end

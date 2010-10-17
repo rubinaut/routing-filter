@@ -34,7 +34,11 @@ module RoutingFilter
       yield(path, env)
     end
 
-    def around_generate(params, &block)
+    def around_generate(*args, &block)
+      params = args.extract_options!                              # this is because we might get a call to root_url
+      
+      args << params
+      
       yield.tap do |result|
         url = result.is_a?(Array) ? result.first : result
         append_extension!(url) if append_extension?(url)
